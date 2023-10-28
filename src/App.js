@@ -24,6 +24,7 @@ const App = () =>{
             <Header/>
             <TypingBox/>
             <Footer setTheme={setTheme}/>
+            <p>hello world</p>
         </div>
     )
 }
