@@ -36,22 +36,7 @@ const ThemeColor = ({ setTheme }) => {
     }),
     
   });
-
-  const getTextColor = (backgroundColor) => {
-    // Calculate text color based on background color
-    // You can use a threshold to determine when to switch to a contrasting text color
-    const threshold = 128;
-    const bgColor = parseInt(backgroundColor.slice(1), 16);
-    const r = (bgColor >> 16) & 0xff;
-    const g = (bgColor >> 8) & 0xff;
-    const b = bgColor & 0xff;
-
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    console.log(brightness)
-    return brightness > threshold ? 'black' : 'white';
-  };
-
-  
+ 
 
   const defaultValue = options.find((option) => option.value === 'white'); 
   
