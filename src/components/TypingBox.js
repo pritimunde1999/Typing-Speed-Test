@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo, createRef, useRef } from 'react';
 import Timer from './Timer';
 import { generate } from "random-words";
-import { GrRefresh } from "react-icons/gr";
+import { AiOutlineReload } from "react-icons/ai";
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
@@ -72,10 +73,13 @@ const TypingBox = () => {
    }, [wordsArray])
 
 
-   if(testEnd)
-   {
-      
-   }   
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      if (testEnd) {
+        navigate('/result');
+      }
+    }, [testEnd, navigate]);  
 
 
    const handleUserInput = (e) => {
@@ -260,7 +264,7 @@ const TypingBox = () => {
          </div>
 
          <center className='btn-container'>
-            <div onClick={resetTest} className='refresh'><span><GrRefresh /></span></div>
+            <div onClick={resetTest} className='refresh'><AiOutlineReload /></div>
             <div className='buttons'>
                <button onClick={()=>handleWord(10)}>10</button>
                <button onClick={()=>handleWord(50)}>50</button>

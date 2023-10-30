@@ -1,7 +1,18 @@
+import { createGlobalStyle } from "styled-components";
+
+
+export const GlobalStyle = createGlobalStyle`
+
 *{
     margin:0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
+     
+    
+}
+
+body{
+    background : ${({theme})=>theme.background};
 }
 
 .app{
@@ -18,6 +29,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
+    color : ${({theme})=>theme.textColor};
 }
 
 
@@ -44,11 +56,14 @@
 }
 
 .refresh{
+    color : ${({theme})=>theme.textColor};
     cursor: pointer;
     font-size: 25px;
+    
 }
 
 .btn-container{
+    color : ${({theme})=>theme.textColor};
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -67,7 +82,8 @@
     cursor: pointer;
     border: none;
     background-color: black;
-    color: white;
+    background : ${({theme})=>theme.textColor};
+    color : ${({theme})=>theme.background};
 }
 
 .social-media{
@@ -92,6 +108,7 @@
     font-weight: 500;
     font-size: 20px;
     margin-bottom: 20px;
+    color : ${({theme})=>theme.textColor};
 }
 
 .timerBtn button{
@@ -100,6 +117,7 @@
     background-color: transparent;
     font-size: 20px;
     cursor: pointer;
+    color : ${({theme})=>theme.textColor};
 }
 
 .timerBtn button:hover{
@@ -109,17 +127,12 @@
 
 
 .type-box{
-    margin-bottom: 200px;
+    height:400px;
     font-size: 20px;
     font-weight: 600;
-    color: #505050;
+    color : ${({theme})=>theme.typeBoxText};
 }
-select{
-    -webkit-appearance: none;
-     border-radius: 5px;
-    appearance: none;
-    padding: 8px;
-}
+
 
 .words{
     display: flex;
@@ -136,10 +149,39 @@ select{
 }
 
 
+
 .current{
-    border-left: 1px solid black;
-    animation: 2s ease 0s infinite normal none running blinking;
+    border-left: 1px solid;
+    animation: 2s ease infinite blinking;
+
+    @keyframes blinking{
+        0%{border-left-color : ${({theme})=>theme.text}}
+        25%{border-left-color : ${({theme})=>theme.background}}
+        50%{border-left-color : ${({theme})=>theme.text}}
+        75%{border-left-color : ${({theme})=>theme.background}}
+        100%{border-left-color : ${({theme})=>theme.text}}
+    
+    }
+   
 }
+
+
+.current-right{
+    border-right: 1px solid ;
+    animation: 2s ease infinite blinkingRight;
+
+    @keyframes blinkingRight{
+        0%{border-right-color : ${({theme})=>theme.text}}
+        25%{border-right-color : ${({theme})=>theme.background}}
+        50%{border-right-color : ${({theme})=>theme.text}}
+        75%{border-right-color : ${({theme})=>theme.background}}
+        100%{border-right-color : ${({theme})=>theme.text}}
+    
+    }
+   
+}
+
+
 
 .correct{
     color:green;
@@ -147,10 +189,4 @@ select{
 
 .incorrect{
     color:red;
-}
-
-
-
-
-
-
+}`;

@@ -3,7 +3,7 @@ import { AiFillGithub,AiFillLinkedin, AiFillMail, AiOutlineInstagram } from "rea
 
 import ThemeColor from './ThemeColor';
 
-const Footer = ({setTheme}) => {
+const Footer = () => {
   return (
     
 
@@ -15,7 +15,7 @@ const Footer = ({setTheme}) => {
                  <AiOutlineInstagram/>
              </div>
 
-              <ThemeColor setTheme={setTheme}/>
+              <ThemeColor/>
         </div>
    
   )

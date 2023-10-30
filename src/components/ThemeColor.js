@@ -1,54 +1,55 @@
 import React from 'react';
 import Select from 'react-select';
+import { themeOptions } from '../Utilities/themeJSON'; // Import from the correct path
+import { useTheme } from '../Context/ThemeContext';
 
-const ThemeColor = ({ setTheme }) => {
-  const options = [
-    { value: 'white', label: 'Lighten-White' },
-    { value: 'black', label: 'Darken-Black' },
-    { value: 'rgb(211,211,211)', label: 'Coloured-Grey' },
-    { value: 'pink', label: 'Coloured-Pink' },
-    { value: 'rgb(153,153,255)', label: 'Coloured-Purple' },
-    { value: 'rgb(51,204,255)', label: 'Coloured-Blue' },
-    { value: 'rgb(204,255,204)', label: 'Coloured-Green' },
-  ];
+const ThemeColor = () => {
+  
+     const { setTheme, theme } = useTheme();
 
-  const customStyles=() => ({
+    console.log(theme);
    
-      control: (base, state) => ({
-      ...base,
-      border: '1px solid #ccc',
-      borderRadius: '5px',
-      padding: '5px',
-    
-    }),
-    
-     option: (provided) => ({
-      ...provided,
-      fontSize: '14px',
-      padding: '6px 8px', // Adjust the padding as needed
-    }),
-
-    menu: (provided) => ({
-      ...provided,
-      position: 'absolute',
-      top: '-530%', // Move the menu above the control
-      left: 0,
-    }),
-    
-  });
  
 
-  const defaultValue = options.find((option) => option.value === 'white'); 
+   function handleTheme(e){
+      console.log(e);
+      setTheme(e.value);
+       localStorage.setItem('theme', JSON.stringify(e.value));
+   }
   
 
   return (
     <div className='selectTheme'>
-      <Select
-        options={options}
-        styles={customStyles()}
-        defaultValue={defaultValue}
-        onChange={(selectedOption) => setTheme(selectedOption.value)}
-      />
+       <Select 
+                    onChange={handleTheme}
+                    options={themeOptions}
+                    menuPlacement='top'
+                    defaultValue={{ label: theme.label, value: theme }}
+                    styles={{
+                        control: (baseStyles, state) => ({
+                            ...baseStyles,
+                            backgroundColor: 'white'
+
+                        }),
+                        menu: (baseStyles, state) => ({
+                            ...baseStyles,
+                            backgroundColor: theme.background,
+                            borderColor: theme.textColor
+                        }),
+                        option: (baseStyles, state) => {
+                            return {
+                                ...baseStyles,
+                                backgroundColor: state.isFocused ? theme.background : theme.textColor,
+                                color: state.isFocused ? theme.textColor : theme.background,
+                                cursor: 'pointer'
+                            }
+
+
+                        }
+
+                    }}
+
+                />
     </div>
   );
 };
