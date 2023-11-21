@@ -1,38 +1,34 @@
 import React, { useState, useEffect } from "react";
-import Header from "./components/Header";
-import TypingBox from "./components/TypingBox";
-import Footer from "./components/Footer";
-import Result from "./components/Result";
 import { Routes, Route } from "react-router-dom";
-import {ThemeProvider} from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import { GlobalStyle } from "./Styles/globalStyle";
 import { useTheme } from "./Context/ThemeContext";
-
-
-console.log("hello")
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from "./Pages/Home";
+import User from "./Pages/User";
 
 const App = () => {
 
-   const {theme} = useTheme();
-   console.log(theme);
+  const { theme } = useTheme();
+
   return (
-     <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <div className="app">
-
+        <ToastContainer />
         <GlobalStyle />
-        <Header />
+      
         <Routes>
-          <Route path="/result" element=<Result /> />
-          <Route path="/" element=<TypingBox /> />
-
+          <Route path="/"  element={<Home/>}/>
+          <Route path="/user"  element={<User/>}/>
         </Routes>
 
-        <Footer />
+        
 
 
       </div>
-      </ThemeProvider>
-   
+    </ThemeProvider>
+
   )
 }
 

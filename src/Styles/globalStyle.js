@@ -17,7 +17,7 @@ body{
 
 .app{
     margin: auto;
-    margin-top: 10px;
+    margin-top: 30px;
     width: 85vw;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@ body{
     align-items:center;
 }
 
-.left div{
+.keyboard{
     /* text-align: center; */
     height: fit-content;
     margin-top: 15px;
@@ -47,12 +47,36 @@ body{
   
 }
 
-.right div{
+.profile{
     /* text-align: center; */
     height: fit-content;
-    margin-top: 15px;
-    font-size: 35px;
+    font-size: 40px;
     cursor: pointer;
+}
+
+.user{
+    color : ${({theme})=>theme.textColor};
+}
+
+.info{
+    display:flex;
+    justify-content: space-between;
+}
+
+.profile-pic{
+    width:3rem;
+    heighr: 3rem;
+    border-radius : 50%;
+    cursor: pointer;
+}
+
+.logout{
+    font-size: 18px;
+    cursor:pointer;
+}
+
+.logout:hover{
+    font-weight: 700;
 }
 
 .refresh{
@@ -90,15 +114,22 @@ body{
     font-size: 30px;
     display: flex;
     gap: 20px;
-    cursor: pointer;
+}
+
+.social-media a{
     color: #551A8B;
+    cursor: pointer;
 }
 
 
 
 .footer{
+
+    position : fixed;
+    bottom:0;
+    margin-bottom:1rem;
     display: flex;
-    justify-content: space-between;
+    gap:60rem;
     align-items: center;
 }
 
@@ -181,7 +212,61 @@ body{
    
 }
 
+.stats-box{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
 
+.right-stats{
+    width:70%;
+}
+
+.title{
+    font-weight:700;
+    font-size:18px;
+    color : ${({theme})=>theme.textColor};
+}
+
+.title span{
+    font-weight:400;
+    font-size:12px;
+    color : ${({theme})=>theme.textColor};
+}
+.subtitle{
+    margin-bottom: 1rem;
+    color : ${({theme})=>theme.textColor};
+}
+
+.try-again{
+    padding: 0.5rem 1rem;
+    background : ${({theme})=>theme.textColor};
+    color : ${({theme})=>theme.background};
+    border-radius: 5px;
+    cursor: pointer;
+    border:none;
+}
+
+.canvas{
+    display:flex;
+    flex-direction:column;
+    gap:2rem;
+}
+
+.graph{
+    width:60%;
+}
+
+//table of user 
+.css-1ygcj2i-MuiTableCell-root{
+    font-weight:700;
+    font-size:1rem;
+    color : ${({theme})=>theme.textColor} !important;
+}
+
+.css-1q1u3t4-MuiTableRow-root{
+    color : ${({theme})=>theme.textColor} !important;
+}
 
 .correct{
     color:green;

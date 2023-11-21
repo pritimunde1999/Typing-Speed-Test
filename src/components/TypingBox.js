@@ -2,18 +2,18 @@ import React, { useEffect, useState, useMemo, createRef, useRef } from 'react';
 import Timer from './Timer';
 import { generate } from "random-words";
 import { AiOutlineReload } from "react-icons/ai";
-import { NavLink, useNavigate } from 'react-router-dom';
+import Stats from './Stats';
 
 
 
 
 const TypingBox = () => {
-   const inputRef = useRef(null);
+   const inputRef = useRef();
 
    const [testStart, setTestStart] = useState(false);
    const [testEnd, setTestEnd] = useState(false);
    const [intervalId, setIntervalId] = useState(null)
-   const [testTime,setTestTime] = useState(15)
+   const [testTime, setTestTime] = useState(15)
    const [countDown, setCountDown] = useState(testTime);
 
    const [currCharIdx, setCurrCharIdx] = useState(0);
@@ -27,28 +27,34 @@ const TypingBox = () => {
 
    const [graphData, setGraphData] = useState([])
 
+
+  
+
+
    const [wordsArray, setWordsArray] = useState(() => {
       //it will generate random 50 words 
       return generate(50);
    })
 
-   function handleWord(wordsCount){
-      setWordsArray((()=>{
-        return generate(wordsCount);
+   function handleWord(wordsCount) {
+      console.log("Entered in this")
+      setWordsArray((() => {
+         return generate(wordsCount);
       }))
    }
-   
 
 
-   function startTimer(){
-      const interval = setInterval(timer,1000);
+
+   function startTimer() {
+      const interval = setInterval(timer, 1000);
       setIntervalId(interval);
 
-      function timer(){
-         setCountDown((latestCountDown)=>{
-            setCorrectChars((correctChars)=>{
-               setGraphData((graphData)=>{
-                  return[...graphData,[15 - latestCountDown + 1,(correctChars / 5) / (testTime - latestCountDown + 1) / 60]]
+      function timer() {
+         
+         setCountDown((latestCountDown) => {
+            setCorrectChars((correctChars) => {
+               setGraphData((graphData) => {
+                  return [...graphData, [testTime - latestCountDown + 1, (correctChars / 5) / (testTime - latestCountDown + 1) / 60]]
                })
                return correctChars;
             })
@@ -56,8 +62,8 @@ const TypingBox = () => {
                setTestEnd(true);
                clearInterval(interval)
                return 0;
-           }
-           return latestCountDown - 1
+            }
+            return latestCountDown - 1
          })
       }
    }
@@ -73,14 +79,17 @@ const TypingBox = () => {
    }, [wordsArray])
 
 
-   const navigate = useNavigate();
+   function calculateWPM() {
+      //check
+      return Math.round((correctChars / 5) / (testTime / 60));
+   }
+   function calculateAccuracy() {
+      return Math.round((correctWords / currWordIdx) * 100)
+   }
 
-   useEffect(() => {
-      if (testEnd) {
-        navigate('/result');
-      }
-    }, [testEnd, navigate]);  
+  
 
+  
 
    const handleUserInput = (e) => {
       if (!testStart) {
@@ -92,7 +101,7 @@ const TypingBox = () => {
       // Get the current word's reference
       const currentWordRef = wordsSpanRef[currWordIdx].current;
       const allCurrentChars = wordsSpanRef[currWordIdx].current.childNodes;
-      console.log(currentWordRef, allCurrentChars);
+      
 
 
       // retrieves all the child nodes (individual characters) of the current word from the wordsSpanRef array
@@ -101,7 +110,7 @@ const TypingBox = () => {
          if (e.keyCode === 32)  //keycode for space
          {
             let correctCharsInAWord = currentWordRef.querySelectorAll(".correct");
-            console.log(correctCharsInAWord);
+            
 
             if (correctCharsInAWord.length === allCurrentChars.length) {
                setCorrectWords(correctWords + 1);
@@ -120,7 +129,7 @@ const TypingBox = () => {
             wordsSpanRef[currWordIdx + 1].current.childNodes[0].className = "current";
 
             //current char become 0 if jumps to new word
-           setCurrCharIdx(0);
+            setCurrCharIdx(0);
             setCurrWordIdx(currWordIdx + 1);
 
             return;
@@ -192,18 +201,18 @@ const TypingBox = () => {
    }
 
 
-   
-   
+
+
    useEffect(() => {
       focusInput()
       wordsSpanRef[0].current.childNodes[0].className = 'current'; //cursor visible at first letter of word at mount
    }, [])
 
 
-   useEffect(()=>{
-       setCountDown(testTime);
-       resetTest();
-   },[testTime])
+   useEffect(() => {
+      setCountDown(testTime);
+      resetTest();
+   }, [testTime])
 
 
    const focusInput = () => {
@@ -213,30 +222,40 @@ const TypingBox = () => {
 
       //When called, it uses the inputRef to access the input element (the one with ref={inputRef}) and then calls the focus method on it.
       // The focus method programmatically gives the input element focus, making it ready to accept keyboard input.
-      inputRef.current.focus()
+      // inputRef.current.focus()
+      inputRef?.current?.focus?.();
    }
 
 
-   function resetTest(){
-        clearInterval(intervalId);
-        setCountDown(testTime)
-        setTestStart(false)
-        setTestEnd(false)
-        setCurrCharIdx(0)
-        setCurrWordIdx(0)
-        resetWordSpanRefClassName()
-        setWordsArray(generate(50))
-        focusInput()
+   function resetTest() {
+      clearInterval(intervalId);
+      setCountDown(testTime)
+      setTestStart(false)
+      setTestEnd(false)
+      setCurrCharIdx(0)
+      setCurrWordIdx(0)
+      setCorrectChars(0)
+      setIncorrectChars(0)
+      setExtraChars(0)
+      setMissedChars(0)
+      setCorrectWords(0)
+      resetWordSpanRefClassName()
+      setWordsArray(generate(50))
+      focusInput()
    }
 
-   function resetWordSpanRefClassName(){
-      wordsSpanRef.map((i)=>{
-         Array.from(i.current.childNodes).map((j)=>{
-            return j.className = '';
-         })
-      })
-
-      wordsSpanRef[0].current.childNodes[0].className = 'current';
+   function resetWordSpanRefClassName() {
+      wordsSpanRef.forEach((ref) => {
+         if (ref.current) {
+            Array.from(ref.current.childNodes).forEach((childNode) => {
+               childNode.className = '';
+            });
+         }
+      });
+   
+      if (wordsSpanRef[0].current) {
+         wordsSpanRef[0].current.childNodes[0].className = 'current';
+      }
    }
 
 
@@ -245,6 +264,9 @@ const TypingBox = () => {
 
    return (
       <div>
+         {
+            testEnd ? <div><Stats correctChars={correctChars} incorrectChars={incorrectChars} missedChars={missedChars} extraChars={extraChars} wpm={calculateWPM()} accuracy={calculateAccuracy()} graphData={graphData} /><button onClick={resetTest} className='try-again'>Try Again</button></div>: 
+         <>
          <Timer setTestTime={setTestTime} countDown={countDown} />
          <div className='type-box' onClick={focusInput}>
             <code className='words'>
@@ -262,17 +284,21 @@ const TypingBox = () => {
             </code>
             <input type='text' className='hidden-input' onKeyDown={handleUserInput} ref={inputRef} />
          </div>
-
-         <center className='btn-container'>
+         </>
+         }
+         { 
+         !testEnd && 
+            <center className='btn-container'>
             <div onClick={resetTest} className='refresh'><AiOutlineReload /></div>
             <div className='buttons'>
-               <button onClick={()=>handleWord(10)}>10</button>
-               <button onClick={()=>handleWord(50)}>50</button>
-               <button onClick={()=>handleWord(80)}>80</button>
-               <button onClick={()=>handleWord(100)}>100</button>
+               <button onClick={() => handleWord(10)}>10</button>
+               <button onClick={() => handleWord(50)}>50</button>
+               <button onClick={() => handleWord(80)}>80</button>
+               <button onClick={() => handleWord(100)}>100</button>
                <span>(No. of Words)</span>
             </div>
          </center>
+         }
       </div>
    )
 

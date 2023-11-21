@@ -1,16 +1,18 @@
 import React from 'react'
 import { BsFillKeyboardFill } from "react-icons/bs";
-import { CgProfile } from "react-icons/cg";
+import Profile from './Profile';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const naviagte = useNavigate();
   return (
     <div className='header'>
         <div className='left'>
-            <h1>TypeCat</h1>
-            <div><BsFillKeyboardFill/></div>
+            <h1 onClick={()=>naviagte('/')} style={{cursor:'pointer'}}>TypeCat</h1>
+            <BsFillKeyboardFill onClick={()=>naviagte('/')} style={{cursor:'pointer'}} className='keyboard'/>
         </div>
         <div className='right'>
-            <div><CgProfile/></div>
+           <Profile/>
         </div>
     </div>
   )

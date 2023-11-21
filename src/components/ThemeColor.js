@@ -6,8 +6,6 @@ import { useTheme } from '../Context/ThemeContext';
 const ThemeColor = () => {
   
      const { setTheme, theme } = useTheme();
-
-    console.log(theme);
    
  
 
