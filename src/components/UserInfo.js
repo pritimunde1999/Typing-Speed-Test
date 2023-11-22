@@ -9,7 +9,7 @@ const UserInfo = ({totalTests}) => {
     <div className='user'>
         <div className='info'>
             <h5>{user && user.email}</h5>
-            <h5>{user && user.metadata.creationTime}</h5>
+            <h5>{user &&user.metadata.creationTime}</h5>
         </div>
         <h3 style={{textAlign:'center'}}>Total Test Taken- {totalTests}</h3>
     </div>

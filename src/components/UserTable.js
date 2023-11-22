@@ -10,7 +10,7 @@ const UserTable = ({ data }) => {
         <div className='table'>
             <TableContainer>
                 <Table>
-                    <TableHead style={{fontWeight:'700'}}>
+                    <TableHead style={{fontWeight:'700S'}}>
                         <TableRow>
                             <TableCell style={cellStyle}>WPM</TableCell>
                             <TableCell style={cellStyle}>Accuracy</TableCell>

@@ -258,13 +258,13 @@ body{
 }
 
 //table of user 
-.css-1ygcj2i-MuiTableCell-root{
+.MuiTableCell-root{
     font-weight:700;
     font-size:1rem;
     color : ${({theme})=>theme.textColor} !important;
 }
 
-.css-1q1u3t4-MuiTableRow-root{
+.MuiTableRow-root{
     color : ${({theme})=>theme.textColor} !important;
 }
 
