@@ -44,7 +44,6 @@ const Profile = () => {
       signInWithPopup(auth, provider)
          .then((result) => {
             const user = result.user;
-            console.log(user)
             toast.success("SignUp Successfully!")
             handleCloseModal();
 

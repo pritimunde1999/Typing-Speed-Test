@@ -26,7 +26,7 @@ ChartJS.register(
 const Graph = ({graphData}) => {
 
     const theme = useTheme()
-    console.log(graphData)
+    
   return (
     <>
             <Line

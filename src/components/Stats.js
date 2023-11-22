@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useCallback } from 'react'
 import Graph from './Graph'
 import { db, auth } from '../firebaseConfig';
 import { toast } from 'react-toastify';
@@ -7,7 +7,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const Stats = ({correctChars,incorrectChars,missedChars,extraChars,wpm,accuracy,graphData}) => {
 
     const [user] = useAuthState(auth);
-    
+    console.log(user)
+    console.log(auth.currentUser)
     let timeSet = new Set();
     const newGraph = graphData.filter(i => {
         if (!timeSet.has(i[0])) {
@@ -16,12 +17,14 @@ const Stats = ({correctChars,incorrectChars,missedChars,extraChars,wpm,accuracy,
         }
     })
 
+   
+
     function pushToDB(){
         if (isNaN(accuracy)) {
             toast.error('Invalid test')
             return;
         }
-        console.log(db); // Add this line
+        
         const resultRef = db.collection('Results');
         const {uid} = auth.currentUser;
         resultRef.add(
@@ -40,6 +43,7 @@ const Stats = ({correctChars,incorrectChars,missedChars,extraChars,wpm,accuracy,
         })
     }
 
+   
     useEffect(()=>{
         if(auth.currentUser){
             pushToDB();
@@ -47,7 +51,7 @@ const Stats = ({correctChars,incorrectChars,missedChars,extraChars,wpm,accuracy,
         else{
             toast.warning("Login/Signup to save the result")
         }
-    },[user])
+    },[auth.currentUser])
 
     return (
     <div className="stats-box">

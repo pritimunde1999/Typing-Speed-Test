@@ -16,7 +16,6 @@ const User = () => {
     const naviagte = useNavigate();
 
     function fetchData(){
-        console.log("entered")
         const { uid } = auth.currentUser;
         const resultRef = db.collection('Results')
        
@@ -28,7 +27,6 @@ const User = () => {
         .get()
         .then((snapshot)=>{
             snapshot.docs.map((doc)=>{
-                console.log("inside log")
                 tempData.push({...doc.data()});
                 tempGraphData.push([doc.data().timeStamp.toDate().toLocaleString().split(',')[0],doc.data().wpm])
                 return null;
